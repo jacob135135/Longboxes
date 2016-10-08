@@ -1,0 +1,71 @@
+{{extend 'longboxes-layout.html'}}
+
+<h2>Search Results</h2>
+
+{{if(total_comics == 0):}}
+    <h3>No resuls</h3>
+{{pass}}
+
+<div class='container clearfix'>	
+    {{for com_index in range(total_comics):
+        owner = False
+        
+        #In case there was problem with data, should not break if user is not known
+        try:
+		    if (str(owner_data[com_index][0]) == str(session.current_user_id)):
+			    owner = True
+            pass
+        except IndexError:
+            owner = False
+        pass
+        try:
+		    owner_username = owner_data[com_index][1]
+        except IndexError:
+            owner_username = "N/A"
+        pass
+	    comic_id = comics_data[com_index][0].id}}
+
+        {{if (com_index == 0) and (categ_lengths[0] != 0):}}
+			<div class='row clearfix'>
+			<h2 class='centered'>Results by title</h2>
+		{{pass}}
+    
+        <!- We print new search result title after last result for current type if the next search result type is not empty-->
+        {{if (com_index == categ_lengths[0]) and (categ_lengths[1] != 0):}}
+			</div><div class='row clearfix'>
+			<h2 class='centered'>Results by publisher</h2>
+		{{pass}}        
+        
+		{{if (com_index == categ_lengths[1]) and (categ_lengths[2] != 0):}}
+			</div> <div class='row clearfix'>
+			<h2 class='centered'>Results by writer</h2>
+		{{pass}}
+
+		{{if (com_index == categ_lengths[2]) and (categ_lengths[3] != 0):}}
+			</div> <div class='row clearfix'>
+			<h2 class='centered'>Results by artist</h2>
+		{{pass}}
+    
+	    <div class='col-md-2 centered blueish'>
+			<a href="viewComicFullInfo.html?id={{=comic_id}}&owner={{=str(owner)}}">
+	    {{if(comics_data[com_index][0].image):}}	
+	        <img class='img_thumbnail' src="{{=URL('download', args=comics_data[com_index][0].image)}}" />
+	    {{else:}}
+	        <img class='img_thumbnail' src="../../Longboxes/static/images/question.jpg" alt="My Logo" />
+	    {{pass}}
+        <p>
+	    {{=comics_data[com_index][0].title}} <br>
+            Issue number {{=comics_data[com_index][0].issue_number}} <br>
+			{{if owner:}}	            
+				You own this comic
+			{{else:}}
+				<strong>{{=owner_username}} owns this box </strong>
+			{{pass}}
+		</p></a>
+	    </div>
+
+	    {{pass}}
+	</div>
+    {{pass}}
+
+</div>

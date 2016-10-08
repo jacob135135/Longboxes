@@ -1,0 +1,5 @@
+{{extend 'longboxes-layout.html'}}
+
+
+<!-- @IAPT - this line will serialise our code for the form out to HTML -->
+{{=edit_box_form}}

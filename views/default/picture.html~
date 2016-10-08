@@ -1,0 +1,21 @@
+{{extend 'longboxes-layout.html'}}
+
+<h2>View your picture</h2>
+
+<img src="http://127.0.0.1:8000/LBox/appadmin/download/db/images.file.be54234e617bfe27.6261746d616e2e6a7067.jpg" >
+
+IMAGE: <br><br>
+{{=image}}
+
+<br><br>
+
+<img src="{{=URL('show',args=image)}}" >
+
+<br><br>
+<img src="{{=URL('show',args=image[0].id)}}">
+
+<p>HELP PLEASE</p>
+
+<img src="{{=URL('download',args=image[0].file)}}">
+
+</div>

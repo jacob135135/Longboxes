@@ -1,0 +1,74 @@
+{{extend 'longboxes-layout.html'}}
+    <!-- @IAPT: A div that you can style for your introductory text -->
+    <div id="intro">
+        <p>Welcome one and all to the newly release Longboxes.</p>
+    </div>
+
+<div>
+	<h4>Click on a username below to see their public collection </h4>
+	
+	
+	{{for user_dta in users_data:
+		username = str(user_dta.username)
+		usr_id = str(user_dta.id)}}
+
+		{{if (usr_id == str(session.current_user_id)):}} <!-- Logged-in user's public collection -->
+			{{username += " (you)"}}
+		{{pass}}
+			<a class='proper_a' href="viewUserComics.html?user_id={{=usr_id}}">&nbsp;{{=username}}&nbsp;</a>			
+	{{pass}}	
+
+</div>
+
+<h2 class='centered'>5 biggest public boxes</h2>
+<!-- (UP TO) 5 biggest boxes followed by 5 newest boxes(can be empty)-->
+<div class='container clearfix'>
+    {{cur_comic_n = 0}}
+    {{for index in range(len(boxes_info)):}}
+		{{cur_box_id = boxes_info[index]['id']
+		  owner = False}}
+		{{if (boxes_info[index]['owner_id'] == session.current_user_id):
+			owner = True
+          pass}}
+		{{owner_username = boxes_info[index]['owner_usern']}}
+
+        {{if index == len(boxes_info)/2:}}
+			<h2 class='centered'>5 newest public boxes</h2>
+		{{pass}}
+        <div class='row clearfix'>
+	    <h3 class='centered'>
+                <strong>{{=boxes_info[index]['title']}}</strong> created on {{=boxes_info[index]['date_created']}}
+	    {{if ((index > 0) and owner):}}	 
+		 <a href="editBox.html?id={{=cur_box_id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+		 <span class="glyphicon glyphicon-trash selectable" onclick="deleteBox({{=cur_box_id}})" aria-hidden="true"></span>
+ 	    {{pass}}
+            </h3>
+	    {{for i in range(boxes_lengths[index]): }} <!-- Going through comics in this box-->
+			{{comic_id = comics_data[cur_comic_n][0].id}}
+	        <div class='col-md-2 centered blueish'>
+				<a href="viewComicFullInfo.html?id={{=comic_id}}&owner={{=str(owner)}}">
+	        {{if(comics_data[cur_comic_n][0].image):}}	
+	            <img class='img_thumbnail' src="{{=URL('download', args=comics_data[cur_comic_n][0].image)}}" />
+	        {{else:}}
+	            <img class='img_thumbnail' src="../../Longboxes/static/images/question.jpg" alt="My Logo" />
+	        {{pass}}
+	        <p>
+		    {{=comics_data[cur_comic_n][0].title}} <br>
+	            Issue number {{=comics_data[cur_comic_n][0].issue_number}} <br>
+				{{if owner:}}	            
+					You own this comic
+				{{else:}}
+					<strong>{{=owner_username}} owns this comic </strong>
+				{{pass}}
+			</p></a>
+			{{if owner:}}
+				{{comic_id = comics_data[cur_comic_n][0].id}}
+				<span class="glyphicon glyphicon-trash selectable" onclick="deleteComic({{=cur_box_id}}, {{=comic_id}})" aria-hidden="true"></span>
+			{{pass}}
+	        </div>
+	        {{cur_comic_n+=1}} <!-- Updating index of current comic so that next comic is known-->
+	    {{pass}}
+	</div>
+    {{pass}}
+
+</div>

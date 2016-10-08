@@ -1,0 +1,14 @@
+{{extend 'longboxes-layout.html'}}
+
+<h2>Register to Longboxes</h2>
+<p> Please enter your preferred username and password below.</p>
+<div class="flash">{{=response.flash or ''}}</div>
+
+<div class='container'>
+    <div class='row'>
+        <a href="../default/login.html"><div class="col-md-2 top_navig centered">Login</div></a>
+    </div>
+</div>
+
+{{=add_user_form}}
+

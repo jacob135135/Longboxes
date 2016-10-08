@@ -1,0 +1,15 @@
+{{extend 'longboxes-layout.html'}}
+
+<h2>Edit comic</h2>
+<!-- @IAPT - this is the little bit of code that will show our response messages in a simple div -->
+<div class="flash">{{=response.flash or ''}}</div>
+<!-- @IAPT - this line will serialise our code for the form out to HTML -->
+{{=edit_form}}
+
+<!-- Textbox's value property is different from regular input -> need to populate it explicitly by populateShortDescr()-->
+<script>
+	$( document ).ready(function() {
+	populateShortDescr();
+	updateShortDescr();  
+	});
+</script>

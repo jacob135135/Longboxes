@@ -1,0 +1,72 @@
+{{extend 'longboxes-layout.html'}}
+
+<h2>Full comic information 
+	{{if (request.get_vars.owner == 'True'):}}
+		<!-- Only owner should see edit link --> 
+		<a href="editComic.html?id={{=comic_data.id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> 
+	{{pass}} 
+</h2>
+
+<div class='container'>
+	<div class='row'>
+		{{if comic_data.image:}}
+			<img class='img_thumbnail_full' src="{{=URL('download', args=comic_data.image)}}" />
+		{{else:}}
+	        <img class='img_thumbnail_full' src="../../Longboxes/static/images/question.jpg" alt="My Logo" />
+	    {{pass}}
+	</div>
+	
+	<div class='row'>
+		<h4>Title: <strong>{{=comic_data.title}}</strong></h3>
+	</div>
+	
+	<div class='row'>
+		<h4>Issue number: <strong>{{=comic_data.issue_number}}</strong></h3>
+	</div>
+
+	<div class='row'>
+		<h4>Publisher: <strong>{{=comic_data.publisher}}</strong></h3>
+	</div>
+
+	<div>
+		<h4> Written by:
+		{{comma_writers = False}} 
+		{{for author in comic_writers:}}
+			{{if comma_writers:}}
+				,
+			{{pass}}
+			<strong>{{=author.full_name}}</strong>
+			{{comma_writers = True}}	
+		{{pass}}		
+		</h4>	
+		
+		<h4> Art by:
+		{{comma_artists = False}}  
+		{{for author in comic_artists:}}
+			{{if comma_artists:}}
+				,
+			{{pass}}
+			<strong>{{=author.full_name}}</strong>
+			{{comma_artists = True}}	
+		{{pass}}		
+		</h4>
+		
+		<div id='short_description_div'>
+			<h3> Short description: </h3>
+			{{=comic_data.short_description}}
+		</div>
+	</div>
+
+	<!-- @IAPT - this is the little bit of code that will show our response messages in a simple div -->
+	<div class="flash">{{=response.flash or ''}}</div>	
+	<br><br>
+	
+	{{=add_form}}
+
+</div>	
+		
+	
+
+
+
+	    

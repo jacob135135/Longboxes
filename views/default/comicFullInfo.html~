@@ -1,0 +1,56 @@
+{{extend 'longboxes-layout.html'}}
+
+<h2>View comic</h2>
+<!-- @IAPT - this is the little bit of code that will show our response messages in a simple div -->
+<div class="flash">{{=response.flash or ''}}</div>
+
+comic_data = comic_data, comic_writers = comic_writers, comic_artists = comic_artists
+
+<div class='container centered'>
+	<div class='row'>
+		{{if comic_data[0].image:}}
+			<img class='img_thumbnail' src="{{=URL('download', args=comics_data[cur_comic_n][0].image)}}" />
+		{{else:}}
+	        <img class='img_thumbnail' src="../../Longboxes/static/images/question.jpg" alt="My Logo" />
+	    {{pass}}
+	</div>
+
+</div>		
+
+
+
+
+
+
+
+
+
+
+
+
+	    <h3 class='centered'>
+                <strong>{{=boxes_info[index]['title']}}</strong>({{=boxes_info[index]['privacy']}}) created on {{=boxes_info[index]['date_created']}}
+	    {{if (index > 0):}}	 
+		 <a href="editBox.html?id={{=cur_box_id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+		 <span class="glyphicon glyphicon-trash selectable" onclick="deleteBox({{=cur_box_id}})" aria-hidden="true"></span>
+ 	    {{pass}}
+            </h3>
+	    {{for i in range(boxes_lengths[index]): }} <!-- Going through comics in this box-->
+	        <div class='col-md-2 centered blueish'>
+	        {{if(comics_data[cur_comic_n][0].image):}}	
+	            <img class='img_thumbnail' src="{{=URL('download', args=comics_data[cur_comic_n][0].image)}}" />
+	        {{else:}}
+	            <img class='img_thumbnail' src="../../Longboxes/static/images/question.jpg" alt="My Logo" />
+	        {{pass}}
+	        <p>
+		    {{=comics_data[cur_comic_n][0].title}} <br>
+	            Issue number {{=comics_data[cur_comic_n][0].issue_number}} <br>
+	            You own this comic
+		</p>
+	        </div>
+	        {{cur_comic_n+=1}} <!-- Updating index of current comic so that next comic is known-->
+	    {{pass}}
+	</div>
+    {{pass}}
+
+</div>

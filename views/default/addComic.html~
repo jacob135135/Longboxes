@@ -1,0 +1,8 @@
+{{extend 'longboxes-layout.html'}}
+
+<h2>Add a new comic to your collection</h2>
+<!-- @IAPT - this is the little bit of code that will show our response messages in a simple div -->
+<div class="flash">{{=response.flash or ''}}</div>
+<!-- @IAPT - this line will serialise our code for the form out to HTML -->
+{{=add_comic_form}}
+

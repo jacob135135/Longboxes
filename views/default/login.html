@@ -1,0 +1,15 @@
+{{extend 'longboxes-layout.html'}}
+
+<h2>You need to log in to use the system </h2>
+<p> Please type your username and password below.</p>
+<div class="flash">{{=response.flash or ''}}</div>
+
+{{=login_form}}
+
+<div class='container'>
+    <div class='row'>
+        <a href="../default/addUser.html"><div class="col-md-2 top_navig centered">Sign up here</div></a>
+    </div>
+</div>
+
+
